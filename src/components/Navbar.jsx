@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X, Download, Sun, Moon, Wifi, WifiOff } from 'lucide-react';
 import { navLinks } from '../data/portfolio';
 
-const Navbar = ({ activeSection }) => {
+const Navbar = ({ activeSection, darkMode, toggleDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   // Track scroll position for background opacity
   useEffect(() => {
@@ -75,8 +89,8 @@ const Navbar = ({ activeSection }) => {
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-dark-950/90 backdrop-blur-xl border-b border-white/[0.08] shadow-lg shadow-black/20'
-            : 'bg-dark-950/80 backdrop-blur-xl border-b border-white/[0.06]'
+            ? (darkMode ? 'bg-dark-950/90 backdrop-blur-xl border-b border-white/[0.08] shadow-lg shadow-black/20' : 'bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-lg shadow-black/5')
+            : (darkMode ? 'bg-dark-950/80 backdrop-blur-xl border-b border-white/[0.06]' : 'bg-white/80 backdrop-blur-xl border-b border-gray-100')
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -99,7 +113,7 @@ const Navbar = ({ activeSection }) => {
                 SK
               </span>
               <span className="w-1 h-1 rounded-full bg-cyan-400/60" />
-              <span className="text-sm text-slate-400 font-light hidden sm:inline-block group-hover:text-slate-300 transition-colors">
+              <span className={`text-sm font-light hidden sm:inline-block transition-colors ${darkMode ? 'text-slate-400 group-hover:text-slate-300' : 'text-slate-500 group-hover:text-slate-600'}`}>
                 Shakib Khan
               </span>
             </motion.a>
@@ -113,8 +127,8 @@ const Navbar = ({ activeSection }) => {
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive(link.href)
-                      ? 'text-cyan-400'
-                      : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                      ? (darkMode ? 'text-cyan-400' : 'text-cyan-600')
+                      : (darkMode ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100')
                   }`}
                 >
                   {link.name}
@@ -132,6 +146,12 @@ const Navbar = ({ activeSection }) => {
                 </a>
               ))}
 
+              {/* Network Status */}
+              <div className={`ml-2 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border ${isOnline ? (darkMode ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-green-50 text-green-600 border-green-200') : (darkMode ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-red-50 text-red-600 border-red-200')}`}>
+                {isOnline ? <Wifi size={14} /> : <WifiOff size={14} />}
+                <span className="hidden lg:inline">{isOnline ? 'Online' : 'Offline'}</span>
+              </div>
+
               {/* Resume Button */}
               <a
                 href="/resume.pdf"
@@ -142,11 +162,20 @@ const Navbar = ({ activeSection }) => {
                 <Download size={14} />
                 Resume
               </a>
+
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleDarkMode}
+                className={`ml-3 p-2 rounded-xl transition-all duration-300 ${darkMode ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                aria-label="Toggle theme"
+              >
+                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
             </div>
 
             {/* Mobile Hamburger */}
             <button
-              className="md:hidden relative z-50 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+              className={`md:hidden relative z-50 p-2 rounded-xl transition-colors ${darkMode ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle navigation menu"
             >
@@ -194,7 +223,7 @@ const Navbar = ({ activeSection }) => {
 
             {/* Slide-in Panel */}
             <motion.div
-              className="fixed top-0 right-0 z-40 h-full w-[280px] bg-dark-950/95 backdrop-blur-2xl border-l border-white/[0.08] md:hidden"
+              className={`fixed top-0 right-0 z-40 h-full w-[280px] backdrop-blur-2xl border-l md:hidden ${darkMode ? 'bg-dark-950/95 border-white/[0.08]' : 'bg-white/95 border-gray-200'}`}
               variants={mobileMenuVariants}
               initial="hidden"
               animate="visible"
@@ -214,8 +243,8 @@ const Navbar = ({ activeSection }) => {
                       animate="visible"
                       className={`relative py-3 px-4 text-lg font-medium rounded-xl transition-all duration-300 ${
                         isActive(link.href)
-                          ? 'text-cyan-400 bg-cyan-400/[0.08]'
-                          : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                          ? (darkMode ? 'text-cyan-400 bg-cyan-400/[0.08]' : 'text-cyan-600 bg-cyan-50')
+                          : (darkMode ? 'text-slate-400 hover:text-white hover:bg-white/[0.05]' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100')
                       }`}
                     >
                       <span className="flex items-center gap-3">
@@ -244,12 +273,12 @@ const Navbar = ({ activeSection }) => {
 
                 {/* Bottom decorative line */}
                 <motion.div
-                  className="mt-auto pt-8 border-t border-white/[0.06]"
+                  className={`mt-auto pt-8 border-t ${darkMode ? 'border-white/[0.06]' : 'border-gray-200'}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <p className="text-xs text-slate-600 tracking-wider uppercase">
+                  <p className={`text-xs tracking-wider uppercase ${darkMode ? 'text-slate-600' : 'text-slate-400'}`}>
                     Shakib Khan — Portfolio
                   </p>
                 </motion.div>

@@ -47,7 +47,7 @@ function useCountUp(target, shouldStart, duration = 2000) {
 }
 
 /** Individual stat item with its own count-up animation */
-function StatItem({ label, value, suffix }) {
+function StatItem({ label, value, suffix, darkMode }) {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.5 });
   const count = useCountUp(value, inView, 2000);
 
@@ -67,7 +67,7 @@ function StatItem({ label, value, suffix }) {
           {count}
           {suffix}
         </span>
-        <p className="text-slate-400 text-sm mt-2 tracking-wide uppercase">
+        <p className={`text-sm mt-2 tracking-wide uppercase ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
           {label}
         </p>
       </div>
@@ -75,7 +75,7 @@ function StatItem({ label, value, suffix }) {
   );
 }
 
-export default function Stats() {
+export default function Stats({ darkMode }) {
   const [containerRef, containerInView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -91,7 +91,7 @@ export default function Stats() {
         initial="hidden"
         animate={containerInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="bg-white/[0.02] border-y border-white/[0.06] py-16 px-6 md:px-20"
+        className={`border-y py-16 px-6 md:px-20 ${darkMode ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-slate-50 border-gray-200'}`}
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -101,6 +101,7 @@ export default function Stats() {
                 label={stat.label}
                 value={stat.value}
                 suffix={stat.suffix}
+                darkMode={darkMode}
               />
             ))}
           </div>

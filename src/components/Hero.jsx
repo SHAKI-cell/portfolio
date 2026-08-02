@@ -13,7 +13,7 @@ const iconMap = {
   Mail,
 };
 
-const Hero = () => {
+const Hero = ({ darkMode }) => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -74,7 +74,7 @@ const Hero = () => {
     >
       {/* Particle Background */}
       <div className="absolute inset-0">
-        <ParticleBackground />
+        <ParticleBackground darkMode={darkMode} />
       </div>
 
       {/* Radial gradient overlay */}
@@ -96,7 +96,7 @@ const Hero = () => {
       />
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030712] to-transparent pointer-events-none" />
+      <div className={`absolute bottom-0 left-0 right-0 h-32 pointer-events-none ${darkMode ? 'bg-gradient-to-t from-[#030712] to-transparent' : 'bg-gradient-to-t from-slate-50 to-transparent'}`} />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -111,10 +111,10 @@ const Hero = () => {
           <motion.div variants={fadeInUp} className="mb-8">
             <div className="glass-sm inline-flex items-center gap-2.5 px-4 py-2 rounded-full">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400" />
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'}`} />
+                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'}`} />
               </span>
-              <span className="text-sm text-slate-300 font-medium">
+              <span className={`text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 Available for opportunities
               </span>
             </div>
@@ -123,7 +123,7 @@ const Hero = () => {
           {/* Greeting */}
           <motion.p
             variants={fadeInUp}
-            className="text-lg text-slate-400 mb-3 font-light"
+            className={`text-lg mb-3 font-light ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}
           >
             Hi, I&apos;m
           </motion.p>
@@ -141,11 +141,11 @@ const Hero = () => {
             variants={fadeInUp}
             className="flex items-center gap-1 mb-8 h-12"
           >
-            <span className="text-xl md:text-2xl text-slate-300 font-light">
+            <span className={`text-xl md:text-2xl font-light ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
               {displayText}
             </span>
             <motion.span
-              className="text-xl md:text-2xl text-cyan-400 font-light"
+              className={`text-xl md:text-2xl font-light ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}
               animate={{ opacity: [1, 0, 1] }}
               transition={{
                 duration: 0.8,
@@ -160,7 +160,7 @@ const Hero = () => {
           {/* Description */}
           <motion.p
             variants={fadeInUp}
-            className="text-base md:text-lg text-slate-400 leading-relaxed max-w-2xl mb-10"
+            className={`text-base md:text-lg leading-relaxed max-w-2xl mb-10 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}
           >
             {personalInfo.about.substring(0, 150)}...
           </motion.p>
@@ -211,7 +211,7 @@ const Hero = () => {
                   href={link.url}
                   target={link.url.startsWith('mailto') ? '_self' : '_blank'}
                   rel="noopener noreferrer"
-                  className="glass-sm w-11 h-11 rounded-full flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-400/30 transition-all duration-300"
+                  className={`glass-sm w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 ${darkMode ? 'text-slate-400 hover:text-cyan-400 hover:border-cyan-400/30' : 'text-slate-600 hover:text-cyan-600 hover:border-cyan-600/30'}`}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={link.name}
@@ -233,16 +233,16 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 0.6 }}
       >
-        <span className="text-[10px] tracking-[0.2em] uppercase text-slate-600 font-light">
+        <span className={`text-[10px] tracking-[0.2em] uppercase font-light ${darkMode ? 'text-slate-600' : 'text-slate-400'}`}>
           Scroll
         </span>
         <motion.div
-          className="w-5 h-8 rounded-full border border-white/[0.15] flex items-start justify-center p-1.5"
-          animate={{ borderColor: ['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)'] }}
+          className={`w-5 h-8 rounded-full border flex items-start justify-center p-1.5 ${darkMode ? 'border-white/[0.15]' : 'border-slate-300'}`}
+          animate={{ borderColor: darkMode ? ['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)'] : ['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.2)', 'rgba(0,0,0,0.1)'] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
-            className="w-1 h-1.5 rounded-full bg-cyan-400"
+            className={`w-1 h-1.5 rounded-full ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'}`}
             animate={{ y: [0, 8, 0] }}
             transition={{
               duration: 1.5,

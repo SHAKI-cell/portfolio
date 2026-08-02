@@ -9,8 +9,12 @@
   }
 
   body {
-    @apply bg-[#030712] text-slate-200 font-sans antialiased;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased transition-colors duration-300;
     overflow-x: hidden;
+  }
+
+  .dark body {
+    @apply bg-[#030712] text-slate-200;
   }
 
   /* Custom Scrollbar */
@@ -19,6 +23,10 @@
   }
 
   ::-webkit-scrollbar-track {
+    @apply bg-slate-100;
+  }
+
+  .dark ::-webkit-scrollbar-track {
     @apply bg-[#030712];
   }
 
@@ -39,11 +47,19 @@
 @layer components {
   /* Glass Effects */
   .glass {
-    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl;
+    @apply bg-white/60 backdrop-blur-xl border border-gray-200 rounded-2xl;
+  }
+
+  .dark .glass {
+    @apply bg-white/[0.03] border-white/[0.08];
   }
 
   .glass-sm {
-    @apply bg-white/[0.04] backdrop-blur-lg border border-white/[0.06] rounded-xl;
+    @apply bg-white/70 backdrop-blur-lg border border-gray-200 rounded-xl;
+  }
+
+  .dark .glass-sm {
+    @apply bg-white/[0.04] border-white/[0.06];
   }
 
   .glass-hover {
@@ -114,10 +130,14 @@
 
   .btn-outline {
     @apply relative inline-flex items-center gap-2 px-8 py-3.5
-           border border-cyan-500/40 text-cyan-400 font-semibold rounded-xl
+           border border-cyan-600/40 text-cyan-600 font-semibold rounded-xl
            overflow-hidden transition-all duration-300
-           hover:bg-cyan-500/10 hover:border-cyan-400/60 hover:shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.03]
+           hover:bg-cyan-50 hover:border-cyan-600/60 hover:shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.03]
            active:scale-[0.98];
+  }
+
+  .dark .btn-outline {
+    @apply border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400/60;
   }
 
   /* Section Layout */
@@ -130,7 +150,11 @@
   }
 
   .section-subtitle {
-    @apply text-slate-400 text-center max-w-2xl mx-auto mb-16 text-base md:text-lg leading-relaxed;
+    @apply text-slate-600 text-center max-w-2xl mx-auto mb-16 text-base md:text-lg leading-relaxed;
+  }
+
+  .dark .section-subtitle {
+    @apply text-slate-400;
   }
 
   /* Gradient Divider */

@@ -22,7 +22,7 @@ const miniStats = [
   { value: "8", label: "Certifications" },
 ];
 
-export default function About() {
+export default function About({ darkMode }) {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
@@ -53,11 +53,11 @@ export default function About() {
             animate={inView ? "visible" : "hidden"}
             variants={fadeInLeft}
           >
-            <p className="text-lg text-slate-300 leading-relaxed mb-6">
+            <p className={`text-lg leading-relaxed mb-6 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
               {personalInfo.about}
             </p>
 
-            <p className="italic text-slate-400 leading-relaxed mb-8">
+            <p className={`italic leading-relaxed mb-8 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
               "{personalInfo.objectives}"
             </p>
 
@@ -71,7 +71,7 @@ export default function About() {
                   <div className="text-2xl font-bold gradient-text mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-xs text-slate-400 uppercase tracking-wider">
+                  <div className={`text-xs uppercase tracking-wider ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                     {stat.label}
                   </div>
                 </div>
@@ -96,16 +96,16 @@ export default function About() {
                   className="glass glass-hover p-6 rounded-2xl flex items-start gap-5 group"
                 >
                   {/* Icon Container */}
-                  <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-3 border border-cyan-500/20 group-hover:border-cyan-400/40 transition-colors duration-300">
-                    <IconComponent className="w-6 h-6 text-cyan-400" />
+                  <div className={`flex-shrink-0 rounded-xl p-3 border transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-cyan-500/20 group-hover:border-cyan-400/40' : 'bg-gradient-to-br from-cyan-600/10 to-blue-600/10 border-cyan-200 group-hover:border-cyan-300'}`}>
+                    <IconComponent className={`w-6 h-6 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`} />
                   </div>
 
                   {/* Text */}
                   <div>
-                    <h3 className="text-white font-semibold text-lg mb-1">
+                    <h3 className={`font-semibold text-lg mb-1 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                       {card.title}
                     </h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
+                    <p className={`text-sm leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                       {card.description}
                     </p>
                   </div>

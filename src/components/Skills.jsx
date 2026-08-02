@@ -21,13 +21,13 @@ const iconMap = {
   Wrench: Wrench,
 };
 
-export default function Skills() {
+export default function Skills({ darkMode }) {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
     <section id="skills" className="section-padding relative overflow-hidden">
       {/* Subtle background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent pointer-events-none" />
+      <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${darkMode ? 'via-cyan-500/[0.02]' : 'via-cyan-600/[0.03]'} to-transparent pointer-events-none`} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
@@ -66,7 +66,7 @@ export default function Skills() {
                 {/* Card Header: Icon + Category */}
                 <div className="flex items-center gap-3 mb-6">
                   <div
-                    className="rounded-lg p-2.5 border border-white/10 relative overflow-hidden"
+                    className={`rounded-lg p-2.5 border relative overflow-hidden ${darkMode ? 'border-white/10' : 'border-gray-200'}`}
                   >
                     {/* Gradient background at low opacity */}
                     <div
@@ -75,9 +75,9 @@ export default function Skills() {
                         background: `linear-gradient(135deg, ${getCSSGradientColors(skill.color)})`,
                       }}
                     />
-                    <IconComponent className="w-5 h-5 text-white relative z-10" />
+                    <IconComponent className={`w-5 h-5 relative z-10 ${darkMode ? 'text-white' : 'text-slate-700'}`} />
                   </div>
-                  <h3 className="text-white font-semibold text-base">
+                  <h3 className={`font-semibold text-base ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                     {skill.category}
                   </h3>
                 </div>
@@ -88,7 +88,7 @@ export default function Skills() {
                     <div key={i}>
                       {/* Label + Percentage */}
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-slate-300 text-sm">
+                        <span className={`text-sm ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                           {item.name}
                         </span>
                         <span className="text-slate-500 text-xs font-mono">
@@ -97,7 +97,7 @@ export default function Skills() {
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div className={`h-2 rounded-full overflow-hidden ${darkMode ? 'bg-white/[0.06]' : 'bg-gray-200'}`}>
                         <motion.div
                           className="h-full rounded-full"
                           style={{

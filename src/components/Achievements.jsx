@@ -11,7 +11,7 @@ const iconMap = {
   PenTool,
 };
 
-const AchievementCard = ({ achievement, index }) => {
+const AchievementCard = ({ achievement, index, darkMode }) => {
   const IconComponent = iconMap[achievement.icon] || Trophy;
 
   return (
@@ -23,20 +23,20 @@ const AchievementCard = ({ achievement, index }) => {
       <div className="absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
       {/* Icon container */}
-      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center flex-shrink-0">
-        <IconComponent className="w-6 h-6 text-cyan-400" />
+      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center flex-shrink-0 ${darkMode ? 'from-cyan-500/20 to-blue-500/20' : 'from-cyan-100 to-blue-100'}`}>
+        <IconComponent className={`w-6 h-6 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`} />
       </div>
 
       {/* Content */}
       <div>
-        <h3 className="font-bold text-white text-lg">{achievement.title}</h3>
-        <p className="text-sm text-slate-400 mt-1">{achievement.description}</p>
+        <h3 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-900'}`}>{achievement.title}</h3>
+        <p className={`text-sm mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{achievement.description}</p>
       </div>
     </motion.div>
   );
 };
 
-const Achievements = () => {
+const Achievements = ({ darkMode }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -68,6 +68,7 @@ const Achievements = () => {
               key={index}
               achievement={achievement}
               index={index}
+              darkMode={darkMode}
             />
           ))}
         </div>

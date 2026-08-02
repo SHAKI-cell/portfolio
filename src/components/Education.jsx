@@ -4,7 +4,7 @@ import { GraduationCap, Award, Calendar } from 'lucide-react';
 import { education, certifications } from '../data/portfolio';
 import { fadeInUp, staggerContainer } from '../utils/animations';
 
-const Education = () => {
+const Education = ({ darkMode }) => {
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [eduRef, eduInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [certRef, certInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -48,22 +48,22 @@ const Education = () => {
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-l-2xl" />
 
               {/* Period */}
-              <div className="flex items-center gap-2 text-sm text-cyan-400 mb-2">
+              <div className={`flex items-center gap-2 text-sm mb-2 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>
                 <Calendar className="w-3.5 h-3.5" />
                 {item.period}
               </div>
 
               {/* Degree */}
-              <h3 className="text-xl font-bold text-white">{item.degree}</h3>
+              <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{item.degree}</h3>
 
               {/* Institution */}
-              <p className="text-slate-400 flex items-center gap-2 mt-1">
+              <p className={`flex items-center gap-2 mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                 <GraduationCap className="w-4 h-4 text-slate-500" />
                 {item.institution}
               </p>
 
               {/* Description */}
-              <p className="text-sm text-slate-400 mt-3 leading-relaxed">
+              <p className={`text-sm mt-3 leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                 {item.description}
               </p>
 
@@ -72,7 +72,7 @@ const Education = () => {
                 {item.highlights.map((highlight) => (
                   <span
                     key={highlight}
-                    className="glass-sm px-3 py-1 text-xs text-cyan-300 border border-cyan-400/10 rounded-full"
+                    className={`px-3 py-1 text-xs border rounded-full ${darkMode ? 'glass-sm text-cyan-300 border-cyan-400/10' : 'bg-slate-100 text-cyan-700 border-gray-200'}`}
                   >
                     {highlight}
                   </span>
@@ -89,10 +89,10 @@ const Education = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl font-bold text-white mb-8 flex items-center gap-3"
+            className={`text-2xl font-bold mb-8 flex items-center gap-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}
           >
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center">
-              <Award className="w-4 h-4 text-cyan-400" />
+            <span className={`w-8 h-8 rounded-lg bg-gradient-to-br flex items-center justify-center ${darkMode ? 'from-cyan-500/20 to-blue-600/20' : 'from-cyan-100 to-blue-100'}`}>
+              <Award className={`w-4 h-4 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`} />
             </span>
             Certifications &amp; Courses
           </motion.h3>
@@ -111,16 +111,16 @@ const Education = () => {
                 className="glass-sm glass-hover p-4 flex items-start gap-3"
               >
                 {/* Award Icon Container */}
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center border border-cyan-400/10">
-                  <Award className="w-5 h-5 text-cyan-400" />
+                <div className={`flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center border ${darkMode ? 'from-cyan-500/20 to-blue-600/20 border-cyan-400/10' : 'from-cyan-100 to-blue-100 border-cyan-200'}`}>
+                  <Award className={`w-5 h-5 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`} />
                 </div>
 
                 {/* Cert Info */}
                 <div className="min-w-0">
-                  <h4 className="font-semibold text-white leading-snug">
+                  <h4 className={`font-semibold leading-snug ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                     {cert.name}
                   </h4>
-                  <p className="text-sm text-slate-400 mt-0.5 flex items-center gap-1.5">
+                  <p className={`text-sm mt-0.5 flex items-center gap-1.5 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                     {cert.issuer}
                     <span className="text-slate-600">•</span>
                     {cert.year}

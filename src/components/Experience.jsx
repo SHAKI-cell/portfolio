@@ -4,7 +4,7 @@ import { Briefcase } from 'lucide-react';
 import { experience } from '../data/portfolio';
 import { fadeInLeft, fadeInRight, fadeInUp } from '../utils/animations';
 
-const TimelineCard = ({ item, index }) => {
+const TimelineCard = ({ item, index, darkMode }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const isEven = index % 2 === 0;
 
@@ -12,7 +12,7 @@ const TimelineCard = ({ item, index }) => {
     <div ref={ref} className="relative flex items-start mb-12 last:mb-0">
       {/* Timeline Dot */}
       <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10">
-        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 ring-4 ring-cyan-400/20 shadow-lg shadow-cyan-500/30" />
+        <div className={`w-4 h-4 rounded-full ring-4 shadow-lg ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500 ring-cyan-400/20 shadow-cyan-500/30' : 'bg-gradient-to-r from-cyan-500 to-blue-600 ring-cyan-200 shadow-cyan-500/20'}`} />
       </div>
 
       {/* Card */}
@@ -35,15 +35,15 @@ const TimelineCard = ({ item, index }) => {
           />
 
           {/* Period Badge */}
-          <span className="text-xs text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full inline-block mb-3 border border-cyan-400/10">
+          <span className={`text-xs px-3 py-1 rounded-full inline-block mb-3 border ${darkMode ? 'text-cyan-400 bg-cyan-500/10 border-cyan-400/10' : 'text-cyan-700 bg-cyan-50 border-cyan-200'}`}>
             {item.period}
           </span>
 
           {/* Role */}
-          <h3 className="text-xl font-bold text-white">{item.role}</h3>
+          <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{item.role}</h3>
 
           {/* Company */}
-          <p className="text-cyan-400 text-sm mt-1 flex items-center gap-2">
+          <p className={`text-sm mt-1 flex items-center gap-2 ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>
             <Briefcase className="w-3.5 h-3.5" />
             {item.company}
           </p>
@@ -51,8 +51,8 @@ const TimelineCard = ({ item, index }) => {
           {/* Description Bullets */}
           <ul className="mt-4 space-y-2">
             {item.description.map((bullet, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
+              <li key={i} className={`flex items-start gap-2 text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'}`} />
                 <span className="leading-relaxed">{bullet}</span>
               </li>
             ))}
@@ -63,7 +63,7 @@ const TimelineCard = ({ item, index }) => {
             {item.technologies.map((tech) => (
               <span
                 key={tech}
-                className="text-xs px-2.5 py-1 rounded-full bg-white/[0.06] text-slate-300 border border-white/[0.04]"
+                className={`text-xs px-2.5 py-1 rounded-full border ${darkMode ? 'bg-white/[0.06] text-slate-300 border-white/[0.04]' : 'bg-slate-100 text-slate-700 border-gray-200'}`}
               >
                 {tech}
               </span>
@@ -75,7 +75,7 @@ const TimelineCard = ({ item, index }) => {
   );
 };
 
-const Experience = () => {
+const Experience = ({ darkMode }) => {
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -106,7 +106,7 @@ const Experience = () => {
 
           {/* Experience Items */}
           {experience.map((item, index) => (
-            <TimelineCard key={index} item={item} index={index} />
+            <TimelineCard key={index} item={item} index={index} darkMode={darkMode} />
           ))}
         </div>
       </div>

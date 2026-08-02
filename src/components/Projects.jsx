@@ -12,7 +12,7 @@ const filterTabs = [
   { label: 'Mobile', value: 'mobile' },
 ];
 
-const Projects = () => {
+const Projects = ({ darkMode }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
@@ -58,7 +58,7 @@ const Projects = () => {
                 className={`px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
                   activeFilter === tab.value
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
-                    : 'text-slate-400 hover:text-white'
+                    : (darkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900')
                 }`}
               >
                 {tab.label}
@@ -87,15 +87,15 @@ const Projects = () => {
                 className="glass glass-hover group overflow-hidden"
               >
                 {/* Image Placeholder */}
-                <div className="relative h-48 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-violet-500/10 flex items-center justify-center overflow-hidden">
-                  <Folder className="w-12 h-12 text-cyan-400/30 transition-transform duration-500 group-hover:scale-125" />
+                <div className={`relative h-48 flex items-center justify-center overflow-hidden ${darkMode ? 'bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-violet-500/10' : 'bg-slate-100'}`}>
+                  <Folder className={`w-12 h-12 transition-transform duration-500 group-hover:scale-125 ${darkMode ? 'text-cyan-400/30' : 'text-cyan-600/30'}`} />
 
                   {/* Hover overlay shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                  <div className={`absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ${darkMode ? 'bg-gradient-to-r from-transparent via-white/[0.03] to-transparent' : 'bg-gradient-to-r from-transparent via-white/50 to-transparent'}`} />
 
                   {/* Featured Badge */}
                   {project.featured && (
-                    <span className="absolute top-3 right-3 bg-cyan-500/20 text-cyan-400 text-xs font-medium px-2.5 py-1 rounded-full border border-cyan-400/20">
+                    <span className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full border ${darkMode ? 'bg-cyan-500/20 text-cyan-400 border-cyan-400/20' : 'bg-cyan-50 text-cyan-700 border-cyan-200'}`}>
                       Featured
                     </span>
                   )}
@@ -103,11 +103,11 @@ const Projects = () => {
 
                 {/* Card Body */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+                  <h3 className={`text-xl font-bold transition-colors duration-300 ${darkMode ? 'text-white group-hover:text-cyan-400' : 'text-slate-900 group-hover:text-cyan-600'}`}>
                     {project.title}
                   </h3>
 
-                  <p className="text-slate-400 text-sm mt-2 line-clamp-3 leading-relaxed">
+                  <p className={`text-sm mt-2 line-clamp-3 leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                     {project.description}
                   </p>
 
@@ -116,7 +116,7 @@ const Projects = () => {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2.5 py-1 rounded-full bg-white/[0.06] text-slate-300 border border-white/[0.04]"
+                        className={`text-xs px-2.5 py-1 rounded-full border ${darkMode ? 'bg-white/[0.06] text-slate-300 border-white/[0.04]' : 'bg-slate-100 text-slate-700 border-gray-200'}`}
                       >
                         {tag}
                       </span>
@@ -124,12 +124,12 @@ const Projects = () => {
                   </div>
 
                   {/* Links */}
-                  <div className="mt-4 pt-4 border-t border-white/[0.06] flex gap-4">
+                  <div className={`mt-4 pt-4 border-t flex gap-4 ${darkMode ? 'border-white/[0.06]' : 'border-gray-200'}`}>
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-cyan-400 transition-colors duration-300"
+                      className={`flex items-center gap-1.5 text-sm transition-colors duration-300 ${darkMode ? 'text-slate-400 hover:text-cyan-400' : 'text-slate-600 hover:text-cyan-600'}`}
                     >
                       <Github className="w-4 h-4" />
                       Code
@@ -138,7 +138,7 @@ const Projects = () => {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-cyan-400 transition-colors duration-300"
+                      className={`flex items-center gap-1.5 text-sm transition-colors duration-300 ${darkMode ? 'text-slate-400 hover:text-cyan-400' : 'text-slate-600 hover:text-cyan-600'}`}
                     >
                       <ExternalLink className="w-4 h-4" />
                       Demo

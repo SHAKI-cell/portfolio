@@ -20,6 +20,19 @@ import Footer from './components/Footer';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('');
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   // Track active section for navbar highlighting
   useEffect(() => {
@@ -81,25 +94,25 @@ const App = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           {/* Navigation */}
-          <Navbar activeSection={activeSection} />
+          <Navbar activeSection={activeSection} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
           {/* Main Sections */}
           <main>
-            <Hero />
-            <About />
-            <Stats />
-            <Skills />
-            <Projects />
-            <Experience />
-            <Education />
-            <Achievements />
-            <GitHubStats />
-            <Testimonials />
-            <Contact />
+            <Hero darkMode={darkMode} />
+            <About darkMode={darkMode} />
+            <Stats darkMode={darkMode} />
+            <Skills darkMode={darkMode} />
+            <Projects darkMode={darkMode} />
+            <Experience darkMode={darkMode} />
+            <Education darkMode={darkMode} />
+            <Achievements darkMode={darkMode} />
+            <GitHubStats darkMode={darkMode} />
+            <Testimonials darkMode={darkMode} />
+            <Contact darkMode={darkMode} />
           </main>
 
           {/* Footer */}
-          <Footer />
+          <Footer darkMode={darkMode} />
         </motion.div>
       )}
     </>
